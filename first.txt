@@ -1,0 +1,178 @@
+
+worker table
+
++-----------+-----------+----------+--------+---------------------+------------+
+| worker_id | firstname | lastname | salary | joining_date        | department |
++-----------+-----------+----------+--------+---------------------+------------+
+|         1 | monika    | arora    |  10000 | 2014-02-20 00:00:00 | HR         |
+|         2 | niharika  | verma    |  80000 | 2014-05-20 00:00:00 | ADMIN      |
+|         3 | vishal    | singhal  | 300000 | 2014-05-20 00:00:00 | HR         |
+|         4 | amitabh   | singh    | 500000 | 2014-05-20 00:00:00 | ADMIN      |
+|         5 | vivek     | bhati    | 500000 | 2014-06-11 00:00:00 | Admin      |
+|         6 | vipul     | dhiwan   | 200000 | 2014-05-20 00:00:00 | ACCOUNT    |
+|         7 | satish    | kumar    |  75000 | 2014-05-20 00:00:00 | ACCOUNT    |
+|         8 | geetika   | chauhan  |  90000 | 2014-05-20 00:00:00 | ADMIN      |
++-----------+-----------+----------+--------+---------------------+------------+
+
+title table
++---------------+---------------+---------------------+
+| WORKER_REF_ID | WORKER_TITLE  | AFFECTED_FROM       |
++---------------+---------------+---------------------+
+|             1 | Manager       | 2016-02-20 00:00:00 |
+|             2 | Excecutive    | 2016-06-11 00:00:00 |
+|             8 | Excecutive    | 2016-02-20 00:00:00 |
+|             5 | Manager       | 2016-06-11 00:00:00 |
+|             4 | Asst. Manager | 2016-06-11 00:00:00 |
+|             7 | Excecutive    | 2016-06-11 00:00:00 |
+|             6 | Lead          | 2016-06-11 00:00:00 |
+|             3 | Lead          | 2016-06-11 00:00:00 |
++---------------+---------------+---------------------+
+
+// bonus table
+
++---------------+--------------+---------------------+
+| WORKER_REF_ID | BONUS_AMOUNT | BONUS_DATE          |
++---------------+--------------+---------------------+
+|             1 |         5000 | 2016-02-20 00:00:00 |
+|             2 |         3000 | 2016-02-20 00:00:00 |
+|             3 |         4000 | 2016-02-20 00:00:00 |
+|             1 |         4500 | 2016-02-20 00:00:00 |
+|             2 |         3500 | 2016-02-20 00:00:00 |
++---------------+--------------+---------------------+
+
+//1. get unique values of department from worker
+
+select distinct department from worker;
+
+//2.print first three character from firstname in worker
+
+select substring(firstname,1,3) from worker;
+
+// 3. fetch unique department with its length frrom worker table;
+select distinct department,length(department) from worker;
++------------+--------------------+
+| department | length(department) |
++------------+--------------------+
+| HR         |                  2 |
+| ADMIN      |                  5 |
+| ACCOUNT    |                  7 |
++------------+--------------------+
+
+// 4. you have to fetch complete_name by adding firstname and lastname as seperate column name complete_name from worker
+
+select concat(firstname,' ',lastname) as complete_name from worker;
+
+
+//5. replace character 'A' to 'a' in firstname 
+
+ select replace(firstname,'A','a') as complete_name from worker;
+ +---------------+
+| complete_name |
++---------------+
+| monika        |
+| niharika      |
+| vishal        |
+| amitabh       |
+| vivek         |
+| vipul         |
+| satish        |
+| geetika       |
++---------------+
+
+//6. fetch worker details of worker order by firstname;
+
+select * from worker order by firstname;
++-----------+-----------+----------+--------+---------------------+------------+
+| worker_id | firstname | lastname | salary | joining_date        | department |
++-----------+-----------+----------+--------+---------------------+------------+
+|         4 | amitabh   | singh    | 500000 | 2014-05-20 00:00:00 | ADMIN      |
+|         8 | geetika   | chauhan  |  90000 | 2014-05-20 00:00:00 | ADMIN      |
+|         1 | monika    | arora    |  10000 | 2014-02-20 00:00:00 | HR         |
+|         2 | niharika  | verma    |  80000 | 2014-05-20 00:00:00 | ADMIN      |
+|         7 | satish    | kumar    |  75000 | 2014-05-20 00:00:00 | ACCOUNT    |
+|         6 | vipul     | dhiwan   | 200000 | 2014-05-20 00:00:00 | ACCOUNT    |
+|         3 | vishal    | singhal  | 300000 | 2014-05-20 00:00:00 | HR         |
+|         5 | vivek     | bhati    | 500000 | 2014-06-11 00:00:00 | Admin      |
++-----------+-----------+----------+--------+---------------------+------------+
+
+
+// 7. fetch worker details of worker order by firstname in ascending and department in descending order
+
+select * from worker order by firstname and department desc;
++-----------+-----------+----------+--------+---------------------+------------+
+| worker_id | firstname | lastname | salary | joining_date        | department |
++-----------+-----------+----------+--------+---------------------+------------+
+|         1 | monika    | arora    |  10000 | 2014-02-20 00:00:00 | HR         |
+|         2 | niharika  | verma    |  80000 | 2014-05-20 00:00:00 | ADMIN      |
+|         3 | vishal    | singhal  | 300000 | 2014-05-20 00:00:00 | HR         |
+|         4 | amitabh   | singh    | 500000 | 2014-05-20 00:00:00 | ADMIN      |
+|         5 | vivek     | bhati    | 500000 | 2014-06-11 00:00:00 | Admin      |
+|         6 | vipul     | dhiwan   | 200000 | 2014-05-20 00:00:00 | ACCOUNT    |
+|         7 | satish    | kumar    |  75000 | 2014-05-20 00:00:00 | ACCOUNT    |
+|         8 | geetika   | chauhan  |  90000 | 2014-05-20 00:00:00 | ADMIN      |
++-----------+-----------+----------+--------+---------------------+------------+
+
+// 8. fetch the worker details of worker whose name is "satish" or "vivek"
+
+select * from worker where firstname='satish' or firstname='vivek';
+ or
+ select * from worker where firstname not in("satish","vivek");
++-----------+-----------+----------+--------+---------------------+------------+
+| worker_id | firstname | lastname | salary | joining_date        | department |
++-----------+-----------+----------+--------+---------------------+------------+
+|         5 | vivek     | bhati    | 500000 | 2014-06-11 00:00:00 | Admin      |
+|         7 | satish    | kumar    |  75000 | 2014-05-20 00:00:00 | ACCOUNT    |
++-----------+-----------+----------+--------+---------------------+------------+
+
+// 8. fetch the worker details of worker whose name is  neither "satish" nor "vivek";
+
+select * from worker where firstname!='satish' and firstname!='vivek';
++-----------+-----------+----------+--------+---------------------+------------+
+| worker_id | firstname | lastname | salary | joining_date        | department |
++-----------+-----------+----------+--------+---------------------+------------+
+|         1 | monika    | arora    |  10000 | 2014-02-20 00:00:00 | HR         |
+|         2 | niharika  | verma    |  80000 | 2014-05-20 00:00:00 | ADMIN      |
+|         3 | vishal    | singhal  | 300000 | 2014-05-20 00:00:00 | HR         |
+|         4 | amitabh   | singh    | 500000 | 2014-05-20 00:00:00 | ADMIN      |
+|         6 | vipul     | dhiwan   | 200000 | 2014-05-20 00:00:00 | ACCOUNT    |
+|         8 | geetika   | chauhan  |  90000 | 2014-05-20 00:00:00 | ADMIN      |
++-----------+-----------+----------+--------+---------------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from worker where firstname not in("satish","vivek");
++-----------+-----------+----------+--------+---------------------+------------+
+| worker_id | firstname | lastname | salary | joining_date        | department |
++-----------+-----------+----------+--------+---------------------+------------+
+|         1 | monika    | arora    |  10000 | 2014-02-20 00:00:00 | HR         |
+|         2 | niharika  | verma    |  80000 | 2014-05-20 00:00:00 | ADMIN      |
+|         3 | vishal    | singhal  | 300000 | 2014-05-20 00:00:00 | HR         |
+|         4 | amitabh   | singh    | 500000 | 2014-05-20 00:00:00 | ADMIN      |
+|         6 | vipul     | dhiwan   | 200000 | 2014-05-20 00:00:00 | ACCOUNT    |
+|         8 | geetika   | chauhan  |  90000 | 2014-05-20 00:00:00 | ADMIN      |
++-----------+-----------+----------+--------+---------------------+------------+
+
+//9 . fetch fullname of worker who works in admin department
+
+ select concat(firstname," ",lastname) as fullname from worker where department="admin";
++-----------------+
+| fullname        |
++-----------------+
+| niharika verma  |
+| amitabh singh   |
+| vivek bhati     |
+| geetika chauhan |
++-----------------+
+
+//10. fetch details of worker whose firstname contain 'a';
+mysql> select * from worker where firstname like '%a%';
++-----------+-----------+----------+--------+---------------------+------------+
+| worker_id | firstname | lastname | salary | joining_date        | department |
++-----------+-----------+----------+--------+---------------------+------------+
+|         1 | monika    | arora    |  10000 | 2014-02-20 00:00:00 | HR         |
+|         2 | niharika  | verma    |  80000 | 2014-05-20 00:00:00 | ADMIN      |
+|         3 | vishal    | singhal  | 300000 | 2014-05-20 00:00:00 | HR         |
+|         4 | amitabh   | singh    | 500000 | 2014-05-20 00:00:00 | ADMIN      |
+|         7 | satish    | kumar    |  75000 | 2014-05-20 00:00:00 | ACCOUNT    |
+|         8 | geetika   | chauhan  |  90000 | 2014-05-20 00:00:00 | ADMIN      |
++-----------+-----------+----------+--------+---------------------+------------+
+6 rows in set (0.01 sec)
